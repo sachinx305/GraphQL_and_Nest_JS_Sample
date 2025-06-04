@@ -1,0 +1,202 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Auth {
+  createdAt: DateTime!
+  email: String!
+  id: Int!
+  password: String!
+  updatedAt: DateTime!
+}
+
+input CreateAuthInput {
+  email: String!
+  password: String!
+}
+
+input CreateDepartmentInput {
+  description: String
+  name: String!
+  organizationId: String!
+}
+
+input CreateOrganizationInput {
+  address: String!
+  description: String!
+  name: String!
+}
+
+input CreateRoleInput {
+  description: String
+  name: String!
+}
+
+input CreateTeamInput {
+  departmentId: String!
+  description: String
+  name: String!
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+  teamId: String!
+}
+
+input CreateUserRoleInput {
+  roleId: Int!
+  userId: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Department {
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  name: String!
+  organization: Organization!
+  teams: [Team!]!
+  updatedAt: DateTime!
+}
+
+type Mutation {
+  createAuth(createAuthInput: CreateAuthInput!): Auth!
+  createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
+  createOrganization(createOrganizationInput: CreateOrganizationInput!): Organization!
+  createRole(createRoleInput: CreateRoleInput!): Role!
+  createTeam(createTeamInput: CreateTeamInput!): Team!
+  createUser(createUserInput: CreateUserInput!): User!
+  createUserRole(createUserRoleInput: CreateUserRoleInput!): UserRole!
+  removeAuth(id: Float!): Auth!
+  removeDepartment(id: String!): Department!
+  removeOrganization(id: String!): Organization!
+  removeRole(id: String!): Role!
+  removeTeam(id: String!): Team!
+  removeUser(id: String!): User!
+  removeUserRole(id: Float!): UserRole!
+  updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
+  updateDepartment(updateDepartmentInput: UpdateDepartmentInput!): Department!
+  updateOrganization(updateOrganizationInput: UpdateOrganizationInput!): Organization!
+  updateRole(updateRoleInput: UpdateRoleInput!): Role!
+  updateTeam(updateTeamInput: UpdateTeamInput!): Team!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  updateUserRole(updateUserRoleInput: UpdateUserRoleInput!): UserRole!
+}
+
+type Organization {
+  address: String
+  createdAt: DateTime!
+  departments: [Department!]!
+  description: String
+  id: String!
+  name: String!
+  updatedAt: DateTime!
+}
+
+type PaginatedOrganizationResponse {
+  organizations: [Organization!]!
+  total: Float!
+}
+
+type Query {
+  findAllAuth: [Auth!]!
+  findAllDepartment(organizationId: String!): [Department!]!
+  findAllOrganization(limit: Float!, page: Float!, sortBy: String!, sortOrder: String!): PaginatedOrganizationResponse!
+  findAllRole: [Role!]!
+  findAllTeam(departmentId: String!): [Team!]!
+  findAllUser(teamId: String!): [User!]!
+  findAllUserRole: [UserRole!]!
+  findOneAuth(id: Float!): Auth!
+  findOneDepartment(id: String!): Department!
+  findOneOrganization(id: String!): Organization!
+  findOneRole(id: String!): Role!
+  findOneTeam(id: String!): Team!
+  findOneUser(id: String!): User!
+  findOneUserRole(id: Float!): UserRole!
+}
+
+type Role {
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  name: String!
+  updatedAt: DateTime!
+}
+
+type Team {
+  createdAt: DateTime!
+  department: Department!
+  description: String
+  id: ID!
+  name: String!
+  updatedAt: DateTime!
+  users: [User!]!
+}
+
+input UpdateAuthInput {
+  email: String
+  id: Int!
+  password: String
+}
+
+input UpdateDepartmentInput {
+  description: String
+  id: ID!
+  name: String
+  organizationId: String
+}
+
+input UpdateOrganizationInput {
+  address: String
+  description: String
+  id: String!
+  name: String
+}
+
+input UpdateRoleInput {
+  description: String
+  id: ID!
+  name: String
+}
+
+input UpdateTeamInput {
+  departmentId: String
+  description: String
+  id: ID!
+  name: String
+}
+
+input UpdateUserInput {
+  email: String
+  id: ID!
+  name: String
+  teamId: String
+}
+
+input UpdateUserRoleInput {
+  id: Int!
+  roleId: Int
+  userId: Int
+}
+
+type User {
+  createdAt: DateTime!
+  email: String!
+  id: ID!
+  name: String!
+  team: Team!
+  updatedAt: DateTime!
+}
+
+type UserRole {
+  createdAt: DateTime!
+  id: Int!
+  roleId: Int!
+  updatedAt: DateTime!
+  userId: Int!
+}

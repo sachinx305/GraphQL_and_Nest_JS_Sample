@@ -1,0 +1,24 @@
+type Team {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateTeamInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateTeamInput {
+  id: Int!
+}
+
+type Query {
+  team: [Team]!
+  team(id: Int!): Team
+}
+
+type Mutation {
+  createTeam(createTeamInput: CreateTeamInput!): Team!
+  updateTeam(updateTeamInput: UpdateTeamInput!): Team!
+  removeTeam(id: Int!): Team
+}
