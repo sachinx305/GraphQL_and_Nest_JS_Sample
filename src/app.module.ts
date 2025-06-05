@@ -18,8 +18,6 @@ import { Team } from './—/team/entities/team.entity';
 import { User } from './—/user/entities/user.entity';
 import { Role } from './—/role/entities/role.entity';
 import { UserRole } from './—/user-role/entities/user-role.entity';
-import { PermissionModule } from './—/permission/permission.module';
-import { RolePermissionModule } from './—/role-permission/role-permission.module';
 
 @Module({
   imports: [
@@ -46,8 +44,6 @@ import { RolePermissionModule } from './—/role-permission/role-permission.modu
     UserModule,
     RoleModule,
     UserRoleModule,
-    PermissionModule,
-    RolePermissionModule
   ],
   controllers: [AppController],
   providers: [AppService],
