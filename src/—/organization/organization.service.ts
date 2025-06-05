@@ -25,7 +25,7 @@ export class OrganizationService {
       skip: (page - 1) * limit,
       take: limit,
       order: { [sortBy]: sortOrder },
-      relations: ['departments', 'departments.teams', 'departments.teams.users'],
+      relations: ['departments', 'departments.teams', 'departments.teams.users', 'departments.teams.users.userRoles', 'departments.teams.users.userRoles.role'],
     });
     return { organizations, total };
   }
@@ -33,7 +33,7 @@ export class OrganizationService {
   async findOne(id: string): Promise<Organization> {
     const org = await this.organizationRepository.findOne({ 
       where: { id },
-      relations: ['departments', 'departments.teams', 'departments.teams.users'],
+      relations: ['departments', 'departments.teams', 'departments.teams.users', 'departments.teams.users.userRoles', 'departments.teams.users.userRoles.role'],
     });
     if (!org) {
       throw new NotFoundException(`Organization with ID ${id} not found`);
