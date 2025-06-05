@@ -34,8 +34,10 @@ export class PermissionService {
   }
 
   async update(id: string, updatePermissionInput: UpdatePermissionInput): Promise<Permission> {
-    await this.permissionRepository.update(id, updatePermissionInput);
-    return this.findOne(id);
+    const permission = await this.findOne(id);
+    
+    Object.assign(permission, updatePermissionInput);
+    return this.permissionRepository.save(permission);
   }
 
   async remove(id: string): Promise<Permission> {

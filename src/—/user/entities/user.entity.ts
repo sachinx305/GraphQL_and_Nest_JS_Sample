@@ -5,8 +5,8 @@ import {
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Team } from '../../team/entities/team.entity';
-import { UserRole } from 'src/—/user-role/entities/user-role.entity';
-import { Role } from 'src/—/role/entities/role.entity';
+import { UserRole } from '../../user-role/entities/user-role.entity';
+import { Role } from '../../role/entities/role.entity';
 
 @ObjectType()
 @Entity()

@@ -37,16 +37,15 @@ export class TeamService {
   }
 
   async update(id: string, updateTeamInput: UpdateTeamInput): Promise<Team> {
-    await this.teamRepository.update(id, updateTeamInput);
-    return this.findOne(id);
+    const team = await this.findOne(id);
+    
+    Object.assign(team, updateTeamInput);
+    return this.teamRepository.save(team);
   }
 
-  async remove(id: string): Promise<Team> {
+  async remove(id: string) {
     const team = await this.findOne(id);
-    if (team.users && team.users.length > 0) {
-      throw new BadRequestException('Cannot delete team with existing users. Please delete all users first.');
-    }
     await this.teamRepository.delete(id);
-    return { ...team, id };
+    return team;
   }
 }

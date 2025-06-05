@@ -42,25 +42,15 @@ export class OrganizationService {
   }
 
   async update(id: string, updateOrganizationInput: UpdateOrganizationInput): Promise<Organization> {
-    const organization = await this.organizationRepository.preload({
-      ...updateOrganizationInput, id
-    });
-
-    if (!organization) {
-      throw new NotFoundException(`Organization with ID ${id} not found`);
-    }
-
+    const organization = await this.findOne(id);
+    
+    Object.assign(organization, updateOrganizationInput);
     return this.organizationRepository.save(organization);
   }
 
-  async remove(id: string): Promise<Organization> {
+  async remove(id: string) {
     const organization = await this.findOne(id);
-    
-    if (organization.departments && organization.departments.length > 0) {
-      throw new BadRequestException('Cannot delete organization with existing departments. Please delete all departments first.');
-    }
-
-    await this.organizationRepository.remove(organization);
-    return {...organization, id};
+    await this.organizationRepository.delete(id);
+    return organization;
   }
 }

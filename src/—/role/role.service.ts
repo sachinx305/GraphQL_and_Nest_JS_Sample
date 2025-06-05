@@ -35,13 +35,15 @@ export class RoleService {
   }
 
   async update(id: string, updateRoleInput: UpdateRoleInput): Promise<Role> {
-    await this.roleRepository.update(id, updateRoleInput);
-    return this.findOne(id);
+    const role = await this.findOne(id);
+    
+    Object.assign(role, updateRoleInput);
+    return this.roleRepository.save(role);
   }
 
-  async remove(id: string): Promise<Role> {
+  async remove(id: string) {
     const role = await this.findOne(id);
     await this.roleRepository.delete(id);
-    return { ...role, id };
+    return role;
   }
 }

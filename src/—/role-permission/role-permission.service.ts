@@ -35,13 +35,15 @@ export class RolePermissionService {
   }
 
   async update(id: string, updateRolePermissionInput: UpdateRolePermissionInput): Promise<RolePermission> {
-    await this.rolePermissionRepository.update(id, updateRolePermissionInput);
-    return this.findOne(id);
+    const rolePermission = await this.findOne(id);
+    
+    Object.assign(rolePermission, updateRolePermissionInput);
+    return this.rolePermissionRepository.save(rolePermission);
   }
 
   async remove(id: string): Promise<RolePermission> {
     const rolePermission = await this.findOne(id);
     await this.rolePermissionRepository.delete(id);
-    return { ...rolePermission, id };
+    return rolePermission;
   }
 }

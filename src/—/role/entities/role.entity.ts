@@ -4,8 +4,8 @@ import {
   OneToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { UserRole } from 'src/—/user-role/entities/user-role.entity';
-import { RolePermission } from 'src/—/role-permission/entities/role-permission.entity';
+import { UserRole } from '../../user-role/entities/user-role.entity';
+import { RolePermission } from '../../role-permission/entities/role-permission.entity';
 
 @ObjectType()
 @Entity()

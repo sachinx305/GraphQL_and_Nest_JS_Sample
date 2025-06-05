@@ -37,16 +37,15 @@ export class DepartmentService {
   }
 
   async update(id: string, updateDepartmentInput: UpdateDepartmentInput): Promise<Department> {
-    await this.departmentRepository.update(id, updateDepartmentInput);
-    return this.findOne(id);
+    const department = await this.findOne(id);
+    
+    Object.assign(department, updateDepartmentInput);
+    return this.departmentRepository.save(department);
   }
 
-  async remove(id: string): Promise<Department> {
+  async remove(id: string) {
     const department = await this.findOne(id);
-    if (department.teams && department.teams.length > 0) {
-      throw new BadRequestException('Cannot delete department with existing teams. Please delete all teams first.');
-    }
     await this.departmentRepository.delete(id);
-    return { ...department, id };
+    return department;
   }
 }

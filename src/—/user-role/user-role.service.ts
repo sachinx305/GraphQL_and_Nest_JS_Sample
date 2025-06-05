@@ -42,13 +42,15 @@ export class UserRoleService {
   }
 
   async update(id: string, updateUserRoleInput: UpdateUserRoleInput): Promise<UserRole> {
-    await this.userRoleRepository.update(id, updateUserRoleInput);
-    return this.findOne(id);
+    const userRole = await this.findOne(id);
+    
+    Object.assign(userRole, updateUserRoleInput);
+    return this.userRoleRepository.save(userRole);
   }
 
-  async remove(id: string): Promise<UserRole> {
+  async remove(id: string) {
     const userRole = await this.findOne(id);
     await this.userRoleRepository.delete(id);
-    return { ...userRole, id };
+    return userRole;
   }
 }
