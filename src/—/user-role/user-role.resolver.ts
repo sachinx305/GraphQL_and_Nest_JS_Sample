@@ -14,12 +14,12 @@ export class UserRoleResolver {
   }
 
   @Query(() => [UserRole])
-  findAllUserRole() {
-    return this.userRoleService.findAll();
+  findAllUserRole(@Args('userId', { nullable: true }) userId?: string, @Args('roleId', { nullable: true }) roleId?: string) {
+    return this.userRoleService.findAll(userId, roleId);
   }
 
   @Query(() => UserRole)
-  findOneUserRole(@Args('id') id: number) {
+  findOneUserRole(@Args('id') id: string) {
     return this.userRoleService.findOne(id);
   }
 
@@ -29,7 +29,7 @@ export class UserRoleResolver {
   }
 
   @Mutation(() => UserRole)
-  removeUserRole(@Args('id') id: number) {
+  removeUserRole(@Args('id') id: string) {
     return this.userRoleService.remove(id);
   }
 }

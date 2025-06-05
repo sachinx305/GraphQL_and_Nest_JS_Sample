@@ -1,9 +1,12 @@
 import {
   Entity, PrimaryGeneratedColumn, Column,
   CreateDateColumn, UpdateDateColumn, ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Team } from '../../team/entities/team.entity';
+import { UserRole } from 'src/—/user-role/entities/user-role.entity';
+import { Role } from 'src/—/role/entities/role.entity';
 
 @ObjectType()
 @Entity()
@@ -23,6 +26,10 @@ export class User {
   @Field(() => Team)
   @ManyToOne(() => Team, { onDelete: 'CASCADE' })
   team: Team;
+
+  @Field(() => [UserRole], { nullable: true })
+  @OneToMany(() => UserRole, (userRole) => userRole.user)
+  userRoles: UserRole[];
 
   @Column()
   teamId: string;

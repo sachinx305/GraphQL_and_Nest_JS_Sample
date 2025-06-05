@@ -4,17 +4,20 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
+// import { UserRoleService } from 'src/—/user-role/user-role.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    // private userRoleService: UserRoleService,
   ) {}
 
   async create(createUserInput: CreateUserInput): Promise<User> {
     const user = this.userRepository.create(createUserInput);
     let newUser = await this.userRepository.save(user);
+    // newUser.userRoles = await this.userRoleService.findAll(newUser.id);
     return await this.findOne(newUser.id);
   }
 
@@ -22,7 +25,7 @@ export class UserService {
     const where = teamId ? { teamId } : {};
     return this.userRepository.find({
       where,
-      relations: ['team', 'team.department', 'team.department.organization'],
+      relations: ['team', 'team.department', 'team.department.organization', 'userRoles', 'userRoles.role'],
       order: { createdAt: 'DESC' },
     });
   }
@@ -30,9 +33,10 @@ export class UserService {
   async findOne(id: string): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: ['team', 'team.department', 'team.department.organization'],
+      relations: ['team', 'team.department', 'team.department.organization', 'userRoles', 'userRoles.role'],
     });
     if (!user) throw new Error('User not found');
+    // user.userRoles = await this.userRoleService.findAll(user.id);
     return user;
   }
 

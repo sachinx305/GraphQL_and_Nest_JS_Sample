@@ -20,12 +20,16 @@ export class RoleService {
 
   async findAll(): Promise<Role[]> {
     return this.roleRepository.find({
+      relations: ['userRoles', 'userRoles.user'],
       order: { createdAt: 'DESC' },
     });
   }
 
   async findOne(id: string): Promise<Role> {
-    const role = await this.roleRepository.findOne({ where: { id } });
+    const role = await this.roleRepository.findOne({
+      where: { id },
+      relations: ['userRoles', 'userRoles.user'],
+    });
     if (!role) throw new Error('Role not found');
     return role;
   }

@@ -45,8 +45,8 @@ input CreateUserInput {
 }
 
 input CreateUserRoleInput {
-  roleId: Int!
-  userId: Int!
+  roleId: String!
+  userId: String!
 }
 
 """
@@ -78,7 +78,7 @@ type Mutation {
   removeRole(id: String!): Role!
   removeTeam(id: String!): Team!
   removeUser(id: String!): User!
-  removeUserRole(id: Float!): UserRole!
+  removeUserRole(id: String!): UserRole!
   updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
   updateDepartment(updateDepartmentInput: UpdateDepartmentInput!): Department!
   updateOrganization(updateOrganizationInput: UpdateOrganizationInput!): Organization!
@@ -110,14 +110,14 @@ type Query {
   findAllRole: [Role!]!
   findAllTeam(departmentId: String!): [Team!]!
   findAllUser(teamId: String!): [User!]!
-  findAllUserRole: [UserRole!]!
+  findAllUserRole(roleId: String, userId: String): [UserRole!]!
   findOneAuth(id: Float!): Auth!
   findOneDepartment(id: String!): Department!
   findOneOrganization(id: String!): Organization!
   findOneRole(id: String!): Role!
   findOneTeam(id: String!): Team!
   findOneUser(id: String!): User!
-  findOneUserRole(id: Float!): UserRole!
+  findOneUserRole(id: String!): UserRole!
 }
 
 type Role {
@@ -126,6 +126,7 @@ type Role {
   id: ID!
   name: String!
   updatedAt: DateTime!
+  userRoles: [UserRole!]
 }
 
 type Team {
@@ -179,9 +180,9 @@ input UpdateUserInput {
 }
 
 input UpdateUserRoleInput {
-  id: Int!
-  roleId: Int
-  userId: Int
+  id: ID!
+  roleId: String
+  userId: String
 }
 
 type User {
@@ -191,12 +192,13 @@ type User {
   name: String!
   team: Team!
   updatedAt: DateTime!
+  userRoles: [UserRole!]
 }
 
 type UserRole {
   createdAt: DateTime!
-  id: Int!
-  roleId: Int!
+  id: ID!
+  role: Role!
   updatedAt: DateTime!
-  userId: Int!
+  user: User!
 }
