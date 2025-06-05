@@ -27,6 +27,11 @@ input CreateOrganizationInput {
   name: String!
 }
 
+input CreatePermissionInput {
+  description: String
+  name: String!
+}
+
 input CreateRoleInput {
   description: String
   name: String!
@@ -68,6 +73,7 @@ type Mutation {
   createAuth(createAuthInput: CreateAuthInput!): Auth!
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
   createOrganization(createOrganizationInput: CreateOrganizationInput!): Organization!
+  createPermission(createPermissionInput: CreatePermissionInput!): Permission!
   createRole(createRoleInput: CreateRoleInput!): Role!
   createTeam(createTeamInput: CreateTeamInput!): Team!
   createUser(createUserInput: CreateUserInput!): User!
@@ -75,6 +81,7 @@ type Mutation {
   removeAuth(id: Float!): Auth!
   removeDepartment(id: String!): Department!
   removeOrganization(id: String!): Organization!
+  removePermission(id: String!): Permission!
   removeRole(id: String!): Role!
   removeTeam(id: String!): Team!
   removeUser(id: String!): User!
@@ -82,6 +89,7 @@ type Mutation {
   updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
   updateDepartment(updateDepartmentInput: UpdateDepartmentInput!): Department!
   updateOrganization(updateOrganizationInput: UpdateOrganizationInput!): Organization!
+  updatePermission(updatePermissionInput: UpdatePermissionInput!): Permission!
   updateRole(updateRoleInput: UpdateRoleInput!): Role!
   updateTeam(updateTeamInput: UpdateTeamInput!): Team!
   updateUser(updateUserInput: UpdateUserInput!): User!
@@ -103,10 +111,19 @@ type PaginatedOrganizationResponse {
   total: Float!
 }
 
+type Permission {
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  name: String!
+  updatedAt: DateTime!
+}
+
 type Query {
   findAllAuth: [Auth!]!
   findAllDepartment(organizationId: String!): [Department!]!
   findAllOrganization(limit: Float!, page: Float!, sortBy: String!, sortOrder: String!): PaginatedOrganizationResponse!
+  findAllPermissions: [Permission!]!
   findAllRole: [Role!]!
   findAllTeam(departmentId: String!): [Team!]!
   findAllUser(teamId: String!): [User!]!
@@ -114,6 +131,7 @@ type Query {
   findOneAuth(id: Float!): Auth!
   findOneDepartment(id: String!): Department!
   findOneOrganization(id: String!): Organization!
+  findOnePermission(id: String!): Permission!
   findOneRole(id: String!): Role!
   findOneTeam(id: String!): Team!
   findOneUser(id: String!): User!
@@ -156,6 +174,12 @@ input UpdateOrganizationInput {
   address: String
   description: String
   id: String!
+  name: String
+}
+
+input UpdatePermissionInput {
+  description: String
+  id: ID!
   name: String
 }
 

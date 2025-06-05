@@ -18,6 +18,8 @@ import { Team } from './—/team/entities/team.entity';
 import { User } from './—/user/entities/user.entity';
 import { Role } from './—/role/entities/role.entity';
 import { UserRole } from './—/user-role/entities/user-role.entity';
+import { PermissionModule } from './—/permission/permission.module';
+import { Permission } from './—/permission/entities/permission.entity';
 
 @Module({
   imports: [
@@ -29,7 +31,7 @@ import { UserRole } from './—/user-role/entities/user-role.entity';
     TypeOrmModule.forRoot({
       type: 'postgres',
       database: 'postgres',
-      entities: [Organization, Department, Team, User, Role, UserRole],
+      entities: [Organization, Department, Team, User, Role, UserRole, Permission],
       synchronize: true,
       host: 'localhost',
       port: 5432,
@@ -44,6 +46,7 @@ import { UserRole } from './—/user-role/entities/user-role.entity';
     UserModule,
     RoleModule,
     UserRoleModule,
+    PermissionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
