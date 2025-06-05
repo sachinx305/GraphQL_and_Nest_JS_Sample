@@ -5,6 +5,8 @@ import {
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { UserRole } from 'src/—/user-role/entities/user-role.entity';
+import { RolePermission } from 'src/—/role-permission/entities/role-permission.entity';
+
 @ObjectType()
 @Entity()
 export class Role {
@@ -23,6 +25,10 @@ export class Role {
   @Field(() => [UserRole], { nullable: true })
   @OneToMany(() => UserRole, (userRole) => userRole.role)
   userRoles: UserRole[];
+
+  @Field(() => [RolePermission], { nullable: true })
+  @OneToMany(() => RolePermission, (rolePermission) => rolePermission.role)
+  rolePermissions: RolePermission[];
 
   @Field(() => Date)
   @CreateDateColumn({ type: 'timestamptz' })

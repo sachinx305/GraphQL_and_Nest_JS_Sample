@@ -20,7 +20,7 @@ export class RoleService {
 
   async findAll(): Promise<Role[]> {
     return this.roleRepository.find({
-      relations: ['userRoles', 'userRoles.user'],
+      relations: ['userRoles', 'userRoles.user', 'rolePermissions', 'rolePermissions.permission'],
       order: { createdAt: 'DESC' },
     });
   }
@@ -28,7 +28,7 @@ export class RoleService {
   async findOne(id: string): Promise<Role> {
     const role = await this.roleRepository.findOne({
       where: { id },
-      relations: ['userRoles', 'userRoles.user'],
+      relations: ['userRoles', 'userRoles.user', 'rolePermissions', 'rolePermissions.permission'],
     });
     if (!role) throw new Error('Role not found');
     return role;

@@ -4,7 +4,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './—/auth/auth.module';
 import { OrganizationModule } from './—/organization/organization.module';
 import { DepartmentModule } from './—/department/department.module';
 import { TeamModule } from './—/team/team.module';
@@ -20,6 +19,8 @@ import { Role } from './—/role/entities/role.entity';
 import { UserRole } from './—/user-role/entities/user-role.entity';
 import { PermissionModule } from './—/permission/permission.module';
 import { Permission } from './—/permission/entities/permission.entity';
+import { RolePermission } from './—/role-permission/entities/role-permission.entity';
+import { RolePermissionModule } from './—/role-permission/role-permission.module';
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import { Permission } from './—/permission/entities/permission.entity';
     TypeOrmModule.forRoot({
       type: 'postgres',
       database: 'postgres',
-      entities: [Organization, Department, Team, User, Role, UserRole, Permission],
+      entities: [Organization, Department, Team, User, Role, UserRole, Permission, RolePermission],
       synchronize: true,
       host: 'localhost',
       port: 5432,
@@ -39,7 +40,6 @@ import { Permission } from './—/permission/entities/permission.entity';
       password: 'postgres',
       autoLoadEntities: true,
     }),
-    AuthModule,
     OrganizationModule,
     DepartmentModule,
     TeamModule,
@@ -47,6 +47,7 @@ import { Permission } from './—/permission/entities/permission.entity';
     RoleModule,
     UserRoleModule,
     PermissionModule,
+    RolePermissionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -25,7 +25,7 @@ export class UserService {
     const where = teamId ? { teamId } : {};
     return this.userRepository.find({
       where,
-      relations: ['team', 'team.department', 'team.department.organization', 'userRoles', 'userRoles.role'],
+      relations: ['team', 'team.department', 'team.department.organization', 'userRoles', 'userRoles.role', 'userRoles.role.rolePermissions', 'userRoles.role.rolePermissions.permission'],
       order: { createdAt: 'DESC' },
     });
   }
@@ -33,7 +33,7 @@ export class UserService {
   async findOne(id: string): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: ['team', 'team.department', 'team.department.organization', 'userRoles', 'userRoles.role'],
+      relations: ['team', 'team.department', 'team.department.organization', 'userRoles', 'userRoles.role', 'userRoles.role.rolePermissions', 'userRoles.role.rolePermissions.permission'],
     });
     if (!user) throw new Error('User not found');
     // user.userRoles = await this.userRoleService.findAll(user.id);

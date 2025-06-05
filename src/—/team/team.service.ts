@@ -22,7 +22,7 @@ export class TeamService {
     const where = departmentId ? { departmentId } : {};
     return this.teamRepository.find({
       where,
-      relations: ['department', 'users', 'department.organization', 'users.userRoles', 'users.userRoles.role'],
+      relations: ['department', 'users', 'department.organization', 'users.userRoles', 'users.userRoles.role', 'users.userRoles.role.rolePermissions', 'users.userRoles.role.rolePermissions.permission'],
       order: { createdAt: 'DESC' },
     });
   }
@@ -30,7 +30,7 @@ export class TeamService {
   async findOne(id: string): Promise<Team> {
     const team = await this.teamRepository.findOne({
       where: { id },
-      relations: ['department', 'users', 'department.organization', 'users.userRoles', 'users.userRoles.role'],
+      relations: ['department', 'users', 'department.organization', 'users.userRoles', 'users.userRoles.role', 'users.userRoles.role.rolePermissions', 'users.userRoles.role.rolePermissions.permission'],
     });
     if (!team) throw new Error('Team not found');
     return team;

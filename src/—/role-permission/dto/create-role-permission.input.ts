@@ -1,10 +1,10 @@
 import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
-export class CreateAuthInput {
+export class CreateRolePermissionInput {
   @Field()
-  email: string;
+  roleId: string;
 
   @Field()
-  password: string;
+  permissionId: string;
 }

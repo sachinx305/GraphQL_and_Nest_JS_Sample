@@ -2,19 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Auth {
-  createdAt: DateTime!
-  email: String!
-  id: Int!
-  password: String!
-  updatedAt: DateTime!
-}
-
-input CreateAuthInput {
-  email: String!
-  password: String!
-}
-
 input CreateDepartmentInput {
   description: String
   name: String!
@@ -35,6 +22,11 @@ input CreatePermissionInput {
 input CreateRoleInput {
   description: String
   name: String!
+}
+
+input CreateRolePermissionInput {
+  permissionId: String!
+  roleId: String!
 }
 
 input CreateTeamInput {
@@ -70,27 +62,27 @@ type Department {
 }
 
 type Mutation {
-  createAuth(createAuthInput: CreateAuthInput!): Auth!
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
   createOrganization(createOrganizationInput: CreateOrganizationInput!): Organization!
   createPermission(createPermissionInput: CreatePermissionInput!): Permission!
   createRole(createRoleInput: CreateRoleInput!): Role!
+  createRolePermission(createRolePermissionInput: CreateRolePermissionInput!): RolePermission!
   createTeam(createTeamInput: CreateTeamInput!): Team!
   createUser(createUserInput: CreateUserInput!): User!
   createUserRole(createUserRoleInput: CreateUserRoleInput!): UserRole!
-  removeAuth(id: Float!): Auth!
   removeDepartment(id: String!): Department!
   removeOrganization(id: String!): Organization!
   removePermission(id: String!): Permission!
   removeRole(id: String!): Role!
+  removeRolePermission(id: String!): RolePermission!
   removeTeam(id: String!): Team!
   removeUser(id: String!): User!
   removeUserRole(id: String!): UserRole!
-  updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
   updateDepartment(updateDepartmentInput: UpdateDepartmentInput!): Department!
   updateOrganization(updateOrganizationInput: UpdateOrganizationInput!): Organization!
   updatePermission(updatePermissionInput: UpdatePermissionInput!): Permission!
   updateRole(updateRoleInput: UpdateRoleInput!): Role!
+  updateRolePermission(updateRolePermissionInput: UpdateRolePermissionInput!): RolePermission!
   updateTeam(updateTeamInput: UpdateTeamInput!): Team!
   updateUser(updateUserInput: UpdateUserInput!): User!
   updateUserRole(updateUserRoleInput: UpdateUserRoleInput!): UserRole!
@@ -116,23 +108,24 @@ type Permission {
   description: String
   id: ID!
   name: String!
+  rolePermissions: [RolePermission!]
   updatedAt: DateTime!
 }
 
 type Query {
-  findAllAuth: [Auth!]!
   findAllDepartment(organizationId: String!): [Department!]!
   findAllOrganization(limit: Float!, page: Float!, sortBy: String!, sortOrder: String!): PaginatedOrganizationResponse!
   findAllPermissions: [Permission!]!
   findAllRole: [Role!]!
+  findAllRolePermissions: [RolePermission!]!
   findAllTeam(departmentId: String!): [Team!]!
   findAllUser(teamId: String!): [User!]!
   findAllUserRole(roleId: String, userId: String): [UserRole!]!
-  findOneAuth(id: Float!): Auth!
   findOneDepartment(id: String!): Department!
   findOneOrganization(id: String!): Organization!
   findOnePermission(id: String!): Permission!
   findOneRole(id: String!): Role!
+  findOneRolePermission(id: String!): RolePermission!
   findOneTeam(id: String!): Team!
   findOneUser(id: String!): User!
   findOneUserRole(id: String!): UserRole!
@@ -143,8 +136,17 @@ type Role {
   description: String
   id: ID!
   name: String!
+  rolePermissions: [RolePermission!]
   updatedAt: DateTime!
   userRoles: [UserRole!]
+}
+
+type RolePermission {
+  createdAt: DateTime!
+  id: ID!
+  permission: Permission!
+  role: Role!
+  updatedAt: DateTime!
 }
 
 type Team {
@@ -155,12 +157,6 @@ type Team {
   name: String!
   updatedAt: DateTime!
   users: [User!]!
-}
-
-input UpdateAuthInput {
-  email: String
-  id: Int!
-  password: String
 }
 
 input UpdateDepartmentInput {
@@ -187,6 +183,12 @@ input UpdateRoleInput {
   description: String
   id: ID!
   name: String
+}
+
+input UpdateRolePermissionInput {
+  id: ID!
+  permissionId: String
+  roleId: String
 }
 
 input UpdateTeamInput {

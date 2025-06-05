@@ -20,12 +20,15 @@ export class PermissionService {
 
   async findAll(): Promise<Permission[]> {
     return await this.permissionRepository.find({
+      relations: ['rolePermissions', 'rolePermissions.role'],
       order: { createdAt: 'DESC' },
     });
   }
 
   async findOne(id: string): Promise<Permission> {
-    const permission = await this.permissionRepository.findOne({ where: { id } });
+    const permission = await this.permissionRepository.findOne({ where: { id },
+      relations: ['rolePermissions', 'rolePermissions.role'],
+    });
     if (!permission) throw new Error('Permission not found');
     return permission;
   }
@@ -38,6 +41,6 @@ export class PermissionService {
   async remove(id: string): Promise<Permission> {
     const permission = await this.findOne(id);
     await this.permissionRepository.delete(id);
-    return permission;
+    return { ...permission, id };
   }
 }

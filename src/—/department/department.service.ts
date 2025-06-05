@@ -22,7 +22,7 @@ export class DepartmentService {
     const where = organizationId ? { organizationId } : {};
     return this.departmentRepository.find({
       where,
-      relations: ['organization', 'teams', 'teams.users', 'teams.users.userRoles', 'teams.users.userRoles.role'],
+      relations: ['organization', 'teams', 'teams.users', 'teams.users.userRoles', 'teams.users.userRoles.role', 'teams.users.userRoles.role.rolePermissions', 'teams.users.userRoles.role.rolePermissions.permission'],
       order: { createdAt: 'DESC' },
     });
   }
@@ -30,7 +30,7 @@ export class DepartmentService {
   async findOne(id: string): Promise<Department> {
     const department = await this.departmentRepository.findOne({
       where: { id },
-      relations: ['organization', 'teams', 'teams.users', 'teams.users.userRoles', 'teams.users.userRoles.role'],
+      relations: ['organization', 'teams', 'teams.users', 'teams.users.userRoles', 'teams.users.userRoles.role', 'teams.users.userRoles.role.rolePermissions', 'teams.users.userRoles.role.rolePermissions.permission'],
     });
     if (!department) throw new Error('Department not found');
     return department;
