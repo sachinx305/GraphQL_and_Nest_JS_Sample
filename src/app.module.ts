@@ -21,6 +21,7 @@ import { PermissionModule } from './—/permission/permission.module';
 import { Permission } from './—/permission/entities/permission.entity';
 import { RolePermission } from './—/role-permission/entities/role-permission.entity';
 import { RolePermissionModule } from './—/role-permission/role-permission.module';
+import { AuthModule } from './—/auth/auth.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { RolePermissionModule } from './—/role-permission/role-permission.modu
     UserRoleModule,
     PermissionModule,
     RolePermissionModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

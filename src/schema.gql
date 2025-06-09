@@ -61,6 +61,10 @@ type Department {
   updatedAt: DateTime!
 }
 
+input LoginInput {
+  email: String!
+}
+
 type Mutation {
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
   createOrganization(createOrganizationInput: CreateOrganizationInput!): Organization!
@@ -70,6 +74,7 @@ type Mutation {
   createTeam(createTeamInput: CreateTeamInput!): Team!
   createUser(createUserInput: CreateUserInput!): User!
   createUserRole(createUserRoleInput: CreateUserRoleInput!): UserRole!
+  login(input: LoginInput!): String!
   removeDepartment(id: String!): Department!
   removeOrganization(id: String!): Organization!
   removePermission(id: String!): Permission!
