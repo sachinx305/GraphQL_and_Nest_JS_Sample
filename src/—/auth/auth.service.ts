@@ -8,7 +8,6 @@ export class AuthService {
   async validateUser(email: string) {
     // TODO: Implement user validation logic
     // For now, just returning a mock user
-    console.log(email);
     if (email === 'invalid@gmail.com') {
       return null;
     }
@@ -19,7 +18,6 @@ export class AuthService {
   }
 
   async login(user: any) {
-    console.log(user);
     const payload = { sub: user.id, email: user.email };
     return {
       access_token: this.jwtService.sign(payload),

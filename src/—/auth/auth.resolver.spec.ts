@@ -25,6 +25,9 @@ describe('AuthResolver', () => {
 
     resolver = module.get<AuthResolver>(AuthResolver);
     authService = module.get<AuthService>(AuthService);
+
+    // Reset all mocks before each test
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
