@@ -22,24 +22,27 @@ import { Permission } from './—/permission/entities/permission.entity';
 import { RolePermission } from './—/role-permission/entities/role-permission.entity';
 import { RolePermissionModule } from './—/role-permission/role-permission.module';
 import { AuthModule } from './—/auth/auth.module';
+import { APP_FILTER } from '@nestjs/core';
+import { GlobalExceptionFilter } from './common/filters/http-exception.filter';
 
 @Module({
   imports: [
-      GraphQLModule.forRoot<ApolloDriverConfig>({
-        driver: ApolloDriver,
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
+      playground: true,
+      context: ({ req }) => ({ req }),
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      database: 'postgres',
-      entities: [Organization, Department, Team, User, Role, UserRole, Permission, RolePermission],
-      synchronize: true,
       host: 'localhost',
       port: 5432,
       username: 'postgres',
       password: 'postgres',
-      autoLoadEntities: true,
+      database: 'postgres',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
     }),
     OrganizationModule,
     DepartmentModule,
@@ -52,6 +55,12 @@ import { AuthModule } from './—/auth/auth.module';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: GlobalExceptionFilter,
+    },
+    AppService,
+  ],
 })
 export class AppModule {}
